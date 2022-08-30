@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Moja Biblioteczka</title>
+    <style>
+        table, th, tr, td {border: 1px solid black;}
+    </style>
+</head>
+
+<h2>Katalog</h2>
+
+<table>
+    <thead>
+    <th>Tytuł</th>
+    <th>Autor</th>
+    <th>Rok Wydania</th>
+    <th>Przeczytane</th>
+    </thead>
+{% for mybook in mybooks %}
+    <tr>
+        <td><a href="/mybooks/{{ loop.index }}">{{ mybook.title }}</a></td>
+        <td>{{ mybook.author }}</td>
+        <td>{{ mybook.year }}</td>
+        <td>{{ mybook.read }}</td>
+    </tr>
+{% endfor %}
+</table>
+<div>
+    <h2> Dodaj Nową Pozycję: </h2>
+    <form method="POST" action="/mybooks/" enctype="multipat/form-data">
+        {{ form.hidden_tag() }}
+        <table>
+            {% for field in form if field.widget.input_type != 'hidden' %}
+                <tr>
+                    <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                    <td>{{ field }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Zapisz">
+    </form>
+</div>
+</body>
+</html>
